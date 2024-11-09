@@ -118,7 +118,7 @@ export default function Component() {
       amountInvested,
       annualRate,
       monthlyRate: monthlyRate.toFixed(2),
-      monthlyRealRate: (monthlyRate * 0.85).toFixed(2),
+      monthlyRealRate: (monthlyRate - (monthlyRate * rate) / 100).toFixed(2),
       grossReturn: grossReturn.toFixed(2),
       tax: tax.toFixed(2),
       netReturn: netReturn.toFixed(2),
