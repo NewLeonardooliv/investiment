@@ -66,4 +66,4 @@ O layout adapta-se a diferentes dispositivos, oferecendo uma experiência otimiz
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/painel-gestao-financeira.git
+   git clone git@github.com:NewLeonardooliv/investiment.git
