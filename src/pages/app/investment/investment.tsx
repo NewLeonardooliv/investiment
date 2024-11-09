@@ -77,6 +77,18 @@ export default function Component() {
     },
   ]
 
+  const calculateRate = (): number => {
+    const rate = month <= 6 ? 22.5 : month <= 12 ? 20 : month <= 24 ? 17.5 : 15
+
+    if (rate < 0) {
+      return 0
+    }
+
+    return rate
+  }
+
+  const rate = calculateRate()
+
   const calculateInvestmentMetrics = (
     initialValue: number,
     annualRate: number,
@@ -95,7 +107,8 @@ export default function Component() {
           amountInvested
         : initialValue * Math.pow(1 + monthlyRate / 100, month) - amountInvested
 
-    const discountedValue = grossReturn - (grossReturn * 20) / 100
+    const discountedIncomeIR = grossReturn - (grossReturn * rate) / 100
+    const discountedValue = amountInvested + discountedIncomeIR
     const tax = grossReturn - discountedValue
     const netReturn = grossReturn - tax
 
@@ -110,6 +123,7 @@ export default function Component() {
       tax: tax.toFixed(2),
       netReturn: netReturn.toFixed(2),
       finalValue: finalValue.toFixed(2),
+      discountedIncomeIR: discountedIncomeIR.toFixed(2),
       discountedValue: discountedValue.toFixed(2),
     }
   }
@@ -197,7 +211,7 @@ export default function Component() {
           <CardTitle>Configuração</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             <div>
               <Label htmlFor="month">Mês</Label>
               <Input
@@ -236,6 +250,10 @@ export default function Component() {
                 value={monthlyContribution}
                 onChange={(e) => setMonthlyContribution(Number(e.target.value))}
               />
+            </div>
+            <div>
+              <Label htmlFor="fees">Juros (%)</Label>
+              <Input type="number" disabled id="fees" value={rate} />
             </div>
           </div>
         </CardContent>
@@ -350,6 +368,12 @@ export default function Component() {
                       <TableCell>Valor Final</TableCell>
                       <TableCell>
                         {formatCurrency(Number(cdbMetrics.finalValue))}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Rendimentos descontado IR</TableCell>
+                      <TableCell>
+                        {formatCurrency(Number(cdbMetrics.discountedIncomeIR))}
                       </TableCell>
                     </TableRow>
                     <TableRow>
