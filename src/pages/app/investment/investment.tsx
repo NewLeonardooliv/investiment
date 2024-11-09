@@ -40,10 +40,9 @@ export default function Component() {
   const [cdbInitialValue, setCdbInitialValue] = useState(5000)
   const [selicInitialValue, setSelicInitialValue] = useState(5000)
   const [poupancaInitialValue, setPoupancaInitialValue] = useState(5000)
-  const [monthlyContribution, setMonthlyContribution] = useState(4500)
+  const [monthlyContribution, setMonthlyContribution] = useState(550)
   const [cdiRate, setCdiRate] = useState(10.75)
-  const [month, setMonth] = useState(1)
-  const [year, setYear] = useState(0.1)
+  const [month, setMonth] = useState(12)
 
   const expenses: Expenses[] = [
     {
@@ -84,15 +83,26 @@ export default function Component() {
   ) => {
     const monthlyRate = annualRate / 12
 
-    const grossReturn = initialValue * (annualRate / 100)
-    const taxRate = 0.15
-    const tax = grossReturn * taxRate
+    const amountInvested = calculateAmountInvested(initialValue)
+
+    const grossReturn =
+      monthlyContribution !== 0
+        ? initialValue * Math.pow(1 + monthlyRate / 100, month) +
+          (monthlyContribution *
+            Math.pow(1 + monthlyRate / 100, month) *
+            (Math.pow(1 + monthlyRate / 100, month) - 1)) /
+            (Math.pow(1 + monthlyRate / 100, 1) - 1) -
+          amountInvested
+        : initialValue * Math.pow(1 + monthlyRate / 100, month) - amountInvested
+
+    const discountedValue = grossReturn - (grossReturn * 20) / 100
+    const tax = grossReturn - discountedValue
     const netReturn = grossReturn - tax
 
-    const finalValue = initialValue * (1 + annualRate / 100)
-    const discountedValue = finalValue - tax
+    const finalValue = grossReturn + amountInvested
 
     return {
+      amountInvested,
       annualRate,
       monthlyRate: monthlyRate.toFixed(2),
       monthlyRealRate: (monthlyRate * 0.85).toFixed(2),
@@ -102,6 +112,12 @@ export default function Component() {
       finalValue: finalValue.toFixed(2),
       discountedValue: discountedValue.toFixed(2),
     }
+  }
+
+  const calculateAmountInvested = (initialValue: number) => {
+    console.log(monthlyContribution)
+
+    return initialValue + month * monthlyContribution
   }
 
   const cdbMetrics = calculateInvestmentMetrics(cdbInitialValue, cdiRate)
@@ -181,7 +197,7 @@ export default function Component() {
           <CardTitle>Configuração</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
             <div>
               <Label htmlFor="month">Mês</Label>
               <Input
@@ -195,9 +211,9 @@ export default function Component() {
               <Label htmlFor="year">Ano</Label>
               <Input
                 type="number"
+                disabled
                 id="year"
-                value={year}
-                onChange={(e) => setYear(Number(e.target.value))}
+                value={(month / 12).toFixed(1)}
               />
             </div>
             <div>
@@ -221,15 +237,6 @@ export default function Component() {
                 onChange={(e) => setMonthlyContribution(Number(e.target.value))}
               />
             </div>
-            <div>
-              <Label htmlFor="cdiRate">Taxa CDI (%)</Label>
-              <Input
-                type="number"
-                id="cdiRate"
-                value={cdiRate}
-                onChange={(e) => setCdiRate(Number(e.target.value))}
-              />
-            </div>
           </div>
         </CardContent>
       </Card>
@@ -243,19 +250,47 @@ export default function Component() {
 
         <TabsContent value="cdb">
           <Card>
-            <CardHeader>
-              <CardTitle>CDB</CardTitle>
+            <CardHeader className="flex flex-row">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <CardTitle>CDB</CardTitle>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="max-w-xs">
+                      CDB é a sigla para Certificado de Depósito Bancário, um
+                      investimento de renda fixa em que o investidor empresta
+                      dinheiro a uma instituição financeira por um período de
+                      tempo determinado. Em troca, o investidor recebe o valor
+                      investido acrescido de juros.
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </CardHeader>
             <CardContent>
               <div className="grid gap-4">
-                <div className="grid w-full max-w-sm items-center gap-1.5">
-                  <Label htmlFor="cdb-initial">Valor inicial</Label>
-                  <Input
-                    type="number"
-                    id="cdb-initial"
-                    value={cdbInitialValue}
-                    onChange={(e) => setCdbInitialValue(Number(e.target.value))}
-                  />
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="w-full">
+                    <Label htmlFor="cdb-initial">Valor inicial</Label>
+                    <Input
+                      type="number"
+                      id="cdb-initial"
+                      value={cdbInitialValue}
+                      onChange={(e) =>
+                        setCdbInitialValue(Number(e.target.value))
+                      }
+                    />
+                  </div>
+                  <div className="w-full">
+                    <Label htmlFor="cdiRate">Taxa CDI (%)</Label>
+                    <Input
+                      type="number"
+                      id="cdiRate"
+                      value={cdiRate}
+                      onChange={(e) => setCdiRate(Number(e.target.value))}
+                    />
+                  </div>
                 </div>
                 <Table>
                   <TableHeader>
@@ -266,12 +301,22 @@ export default function Component() {
                   </TableHeader>
                   <TableBody>
                     <TableRow>
+                      <TableCell>Valor Investido</TableCell>
+                      <TableCell>
+                        {formatCurrency(cdbMetrics.amountInvested)}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
                       <TableCell>Valor CDI</TableCell>
                       <TableCell>{cdiRate}%</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>Renda sobre CDI</TableCell>
                       <TableCell>100%</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableHead>Juros</TableHead>
+                      <TableHead></TableHead>
                     </TableRow>
                     <TableRow>
                       <TableCell>Ao Ano</TableCell>
@@ -284,6 +329,10 @@ export default function Component() {
                     <TableRow>
                       <TableCell>Ao Mês Real</TableCell>
                       <TableCell>{cdbMetrics.monthlyRealRate}%</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableHead>Dinheiro</TableHead>
+                      <TableHead></TableHead>
                     </TableRow>
                     <TableRow>
                       <TableCell>Rendimentos Juros</TableCell>
@@ -318,8 +367,22 @@ export default function Component() {
 
         <TabsContent value="selic">
           <Card>
-            <CardHeader>
-              <CardTitle>SELIC</CardTitle>
+            <CardHeader className="flex flex-row">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <CardTitle>SELIC</CardTitle>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="max-w-xs">
+                      A Selic (Sistema Especial de Liquidação e Custódia) é a
+                      taxa básica de juros da economia brasileira. Ela é o
+                      principal instrumento do Banco Central do Brasil (BC) para
+                      controlar a inflação.
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </CardHeader>
             <CardContent>
               <div className="grid gap-4">
