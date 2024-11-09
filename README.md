@@ -55,10 +55,10 @@ O layout adapta-se a diferentes dispositivos, oferecendo uma experiência otimiz
 
 <!-- Adicione imagens do projeto aqui -->
 ### Visualização de Despesas
-![Exemplo de Despesas](path/to/despesas-image.png)
+![Exemplo de Despesas](https://i.imgur.com/kbBnHjx.png)
 
 ### Simulação de Investimentos
-![Exemplo de Simulação de Investimentos](path/to/investimentos-image.png)
+![Exemplo de Simulação de Investimentos](https://i.imgur.com/6IFnwt3.png)
 
 ---
 
