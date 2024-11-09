@@ -292,7 +292,7 @@ export default function Component() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Configuração</CardTitle>
+          <CardTitle>Calculadora de Investimentos</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
