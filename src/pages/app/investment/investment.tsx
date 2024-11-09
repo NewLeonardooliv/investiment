@@ -29,6 +29,12 @@ const formatCurrency = (value: number) => {
   }).format(value)
 }
 
+type Expenses = {
+  name: string
+  percentage: number
+  description: string
+}
+
 export default function Component() {
   const [salary, setSalary] = useState(5000)
   const [cdbInitialValue, setCdbInitialValue] = useState(5000)
@@ -39,48 +45,36 @@ export default function Component() {
   const [month, setMonth] = useState(1)
   const [year, setYear] = useState(0.1)
 
-  const expenses = [
+  const expenses: Expenses[] = [
     {
       name: 'Essenciais (Necessidades)',
-      percentage: 55,
-      amount: salary * 0.55,
+      percentage: 0.6,
       description:
         'Inclui despesas básicas, como aluguel, alimentação, contas, transporte, etc.',
     },
     {
       name: 'Liberdade Financeira (Investimentos)',
-      percentage: 10,
-      amount: salary * 0.1,
+      percentage: 0.1,
       description:
         'Montante destinado a investimentos para gerar renda passiva, visando independência financeira.',
     },
     {
       name: 'Educação (Crescimento Pessoal)',
-      percentage: 10,
-      amount: salary * 0.1,
+      percentage: 0.1,
       description:
         'Para investir em cursos, livros, treinamentos e qualquer coisa que aumente suas habilidades e conhecimentos.',
     },
     {
       name: 'Poupança para Grandes Compras',
-      percentage: 10,
-      amount: salary * 0.1,
+      percentage: 0.1,
       description:
         'Reserva para metas específicas, como viagens, compra de um carro, ou um fundo de emergência.',
     },
     {
       name: 'Diversão (Lazer)',
-      percentage: 10,
-      amount: salary * 0.1,
+      percentage: 0.1,
       description:
         'Dinheiro para gastar em atividades de lazer e entretenimento, como restaurantes, hobbies, passeios, etc.',
-    },
-    {
-      name: 'Doações (Contribuição)',
-      percentage: 5,
-      amount: salary * 0.05,
-      description:
-        'Destinado a doações ou a ajudar outras pessoas, seja com caridade, ajuda à família, ou outros.',
     },
   ]
 
@@ -114,6 +108,16 @@ export default function Component() {
   const selicMetrics = calculateInvestmentMetrics(selicInitialValue, 10.75)
   const poupancaMetrics = calculateInvestmentMetrics(poupancaInitialValue, 6.0)
 
+  const calculatePorcentage = (expenses: Expenses[]) => {
+    let porcentage = 0
+
+    expenses.forEach((expense) => {
+      porcentage += expense.percentage
+    })
+
+    return Math.round(porcentage * 100) / 100
+  }
+
   return (
     <div className="container mx-auto space-y-6 p-4">
       <Card>
@@ -142,7 +146,7 @@ export default function Component() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {expenses.map((expense) => (
+                  {expenses.map((expense: Expenses) => (
                     <TableRow key={expense.name}>
                       <TableCell>
                         <Tooltip>
@@ -152,13 +156,17 @@ export default function Component() {
                           </TooltipContent>
                         </Tooltip>
                       </TableCell>
-                      <TableCell>{expense.percentage}%</TableCell>
-                      <TableCell>{formatCurrency(expense.amount)}</TableCell>
+                      <TableCell>{expense.percentage * 100}%</TableCell>
+                      <TableCell>
+                        {formatCurrency(salary * expense.percentage)}
+                      </TableCell>
                     </TableRow>
                   ))}
                   <TableRow>
                     <TableCell className="font-bold">Total</TableCell>
-                    <TableCell>100%</TableCell>
+                    <TableCell>
+                      {calculatePorcentage(expenses) * 100}%
+                    </TableCell>
                     <TableCell>{formatCurrency(salary)}</TableCell>
                   </TableRow>
                 </TableBody>
