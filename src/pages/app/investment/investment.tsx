@@ -262,7 +262,7 @@ export default function Component() {
                       <TableCell>{cdiRate}%</TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell>Rend sobre CDI</TableCell>
+                      <TableCell>Renda sobre CDI</TableCell>
                       <TableCell>100%</TableCell>
                     </TableRow>
                     <TableRow>
