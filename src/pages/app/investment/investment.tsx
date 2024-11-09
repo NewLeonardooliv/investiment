@@ -109,7 +109,7 @@ export default function Component() {
 
     const discountedIncomeIR = grossReturn - (grossReturn * rate) / 100
     const discountedValue = amountInvested + discountedIncomeIR
-    const tax = grossReturn - discountedValue
+    const tax = grossReturn - discountedIncomeIR
     const netReturn = grossReturn - tax
 
     const finalValue = grossReturn + amountInvested
