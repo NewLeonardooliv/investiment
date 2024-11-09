@@ -24,4 +24,4 @@ jobs:
           username: ${{ secrets.ftp_user }}
           password: ${{ secrets.ftp_password }}
           local-dir: dist/
-          server-dir: /home3/hgsys197/investiment.systemforme.com.br/
+          server-dir: investiment.systemforme.com.br/
