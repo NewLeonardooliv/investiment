@@ -1,5 +1,6 @@
 'use client'
 
+import { Info } from 'lucide-react'
 import { useState } from 'react'
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -437,6 +438,45 @@ export default function Component() {
           </Card>
         </TabsContent>
       </Tabs>
+      <Card>
+        <CardHeader>
+          <CardTitle>Informações Adicionais</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="flex items-center space-x-2">
+              <Info className="h-4 w-4" />
+              <p>
+                O CDB (Certificado de Depósito Bancário) geralmente oferece as
+                melhores taxas de retorno entre as opções apresentadas.
+              </p>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Info className="h-4 w-4" />
+              <p>
+                A taxa SELIC é a taxa básica de juros da economia brasileira,
+                utilizada como referência para várias aplicações financeiras.
+              </p>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Info className="h-4 w-4" />
+              <p>
+                A poupança é considerada um investimento de baixo risco, mas
+                geralmente oferece retornos menores em comparação com outras
+                opções.
+              </p>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Info className="h-4 w-4" />
+              <p>
+                Lembre-se de considerar seus objetivos financeiros, perfil de
+                risco e horizonte de investimento ao escolher uma opção de
+                investimento.
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   )
 }
