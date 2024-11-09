@@ -2,6 +2,7 @@ import { isAxiosError } from 'axios'
 import { useLayoutEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
+import { Footer } from '@/components/footer'
 import { Header } from '@/components/header'
 import { api } from '@/lib/axios'
 
@@ -39,6 +40,7 @@ export function AppLayout() {
       <div className="mt-10 flex flex-1 flex-col gap-4 p-8 pt-6">
         <Outlet />
       </div>
+      <Footer />
     </div>
   )
 }
