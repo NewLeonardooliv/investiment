@@ -341,282 +341,284 @@ export default function Component() {
             </div>
           </div>
         </CardContent>
-      </Card>
 
-      <Tabs defaultValue="cdb" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="cdb">CDB</TabsTrigger>
-          <TabsTrigger value="selic">SELIC</TabsTrigger>
-          <TabsTrigger value="poupanca">POUPANÇA</TabsTrigger>
-        </TabsList>
+        <Tabs defaultValue="cdb" className="w-full p-5">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="cdb">CDB</TabsTrigger>
+            <TabsTrigger value="selic">SELIC</TabsTrigger>
+            <TabsTrigger value="poupanca">POUPANÇA</TabsTrigger>
+          </TabsList>
 
-        <TabsContent value="cdb">
-          <Card>
-            <CardHeader className="flex flex-row">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <CardTitle>CDB</CardTitle>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p className="max-w-xs">
-                      CDB é a sigla para Certificado de Depósito Bancário, um
-                      investimento de renda fixa em que o investidor empresta
-                      dinheiro a uma instituição financeira por um período de
-                      tempo determinado. Em troca, o investidor recebe o valor
-                      investido acrescido de juros.
-                    </p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="w-full">
-                    <Label htmlFor="cdb-initial">Valor inicial</Label>
+          <TabsContent value="cdb">
+            <Card>
+              <CardHeader className="flex flex-row">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <CardTitle>CDB</CardTitle>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p className="max-w-xs">
+                        CDB é a sigla para Certificado de Depósito Bancário, um
+                        investimento de renda fixa em que o investidor empresta
+                        dinheiro a uma instituição financeira por um período de
+                        tempo determinado. Em troca, o investidor recebe o valor
+                        investido acrescido de juros.
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </CardHeader>
+              <CardContent>
+                <div className="grid gap-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="w-full">
+                      <Label htmlFor="cdb-initial">Valor inicial</Label>
+                      <Input
+                        type="number"
+                        id="cdb-initial"
+                        value={cdbInitialValue}
+                        onChange={(e) =>
+                          setCdbInitialValue(Number(e.target.value))
+                        }
+                      />
+                    </div>
+                    <div className="w-full">
+                      <Label htmlFor="cdiRate">Taxa CDI (%)</Label>
+                      <Input
+                        type="number"
+                        id="cdiRate"
+                        value={cdiRate}
+                        onChange={(e) => setCdiRate(Number(e.target.value))}
+                      />
+                    </div>
+                  </div>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Métrica</TableHead>
+                        <TableHead>Valor</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell>Valor Investido</TableCell>
+                        <TableCell>
+                          {formatCurrency(cdbMetrics.amountInvested)}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Valor CDI</TableCell>
+                        <TableCell>{cdiRate}%</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Renda sobre CDI</TableCell>
+                        <TableCell>100%</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableHead>Juros</TableHead>
+                        <TableHead></TableHead>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Ao Ano</TableCell>
+                        <TableCell>{cdbMetrics.annualRate}%</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Ao Mês</TableCell>
+                        <TableCell>{cdbMetrics.monthlyRate}%</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Ao Mês Real</TableCell>
+                        <TableCell>{cdbMetrics.monthlyRealRate}%</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableHead>Dinheiro</TableHead>
+                        <TableHead></TableHead>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Rendimentos Juros</TableCell>
+                        <TableCell>
+                          {formatCurrency(Number(cdbMetrics.grossReturn))}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Imposto Rendimento</TableCell>
+                        <TableCell>
+                          {formatCurrency(Number(cdbMetrics.tax))}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Valor Final</TableCell>
+                        <TableCell>
+                          {formatCurrency(Number(cdbMetrics.finalValue))}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Rendimentos descontado IR</TableCell>
+                        <TableCell>
+                          {formatCurrency(
+                            Number(cdbMetrics.discountedIncomeIR),
+                          )}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Valor descontado IR</TableCell>
+                        <TableCell>
+                          {formatCurrency(Number(cdbMetrics.discountedValue))}
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="selic">
+            <Card>
+              <CardHeader className="flex flex-row">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <CardTitle>SELIC</CardTitle>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p className="max-w-xs">
+                        A Selic (Sistema Especial de Liquidação e Custódia) é a
+                        taxa básica de juros da economia brasileira. Ela é o
+                        principal instrumento do Banco Central do Brasil (BC)
+                        para controlar a inflação.
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </CardHeader>
+              <CardContent>
+                <div className="grid gap-4">
+                  <div className="grid w-full max-w-sm items-center gap-1.5">
+                    <Label htmlFor="selic-initial">Valor inicial</Label>
                     <Input
                       type="number"
-                      id="cdb-initial"
-                      value={cdbInitialValue}
+                      id="selic-initial"
+                      value={selicInitialValue}
                       onChange={(e) =>
-                        setCdbInitialValue(Number(e.target.value))
+                        setSelicInitialValue(Number(e.target.value))
                       }
                     />
                   </div>
-                  <div className="w-full">
-                    <Label htmlFor="cdiRate">Taxa CDI (%)</Label>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Métrica</TableHead>
+                        <TableHead>Valor</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell>Taxa SELIC</TableCell>
+                        <TableCell>10.75%</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Ao Ano</TableCell>
+                        <TableCell>{selicMetrics.annualRate}%</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Ao Mês</TableCell>
+                        <TableCell>{selicMetrics.monthlyRate}%</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Ao Mês Real</TableCell>
+                        <TableCell>{selicMetrics.monthlyRealRate}%</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Rendimentos Juros</TableCell>
+                        <TableCell>
+                          {formatCurrency(Number(selicMetrics.grossReturn))}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Imposto Rendimento</TableCell>
+                        <TableCell>
+                          {formatCurrency(Number(selicMetrics.tax))}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Valor Final</TableCell>
+                        <TableCell>
+                          {formatCurrency(Number(selicMetrics.finalValue))}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Valor descontado IR</TableCell>
+                        <TableCell>
+                          {formatCurrency(Number(selicMetrics.discountedValue))}
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="poupanca">
+            <Card>
+              <CardHeader>
+                <CardTitle>POUPANÇA</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid gap-4">
+                  <div className="grid w-full max-w-sm items-center gap-1.5">
+                    <Label htmlFor="poupanca-initial">Valor inicial</Label>
                     <Input
                       type="number"
-                      id="cdiRate"
-                      value={cdiRate}
-                      onChange={(e) => setCdiRate(Number(e.target.value))}
+                      id="poupanca-initial"
+                      value={poupancaInitialValue}
+                      onChange={(e) =>
+                        setPoupancaInitialValue(Number(e.target.value))
+                      }
                     />
                   </div>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Métrica</TableHead>
+                        <TableHead>Valor</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell>Taxa Poupança</TableCell>
+                        <TableCell>6.00%</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Ao Ano</TableCell>
+                        <TableCell>{poupancaMetrics.annualRate}%</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Ao Mês</TableCell>
+                        <TableCell>{poupancaMetrics.monthlyRate}%</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Rendimentos Juros</TableCell>
+                        <TableCell>
+                          {formatCurrency(Number(poupancaMetrics.grossReturn))}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Valor Final</TableCell>
+                        <TableCell>
+                          {formatCurrency(Number(poupancaMetrics.finalValue))}
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
                 </div>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Métrica</TableHead>
-                      <TableHead>Valor</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell>Valor Investido</TableCell>
-                      <TableCell>
-                        {formatCurrency(cdbMetrics.amountInvested)}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Valor CDI</TableCell>
-                      <TableCell>{cdiRate}%</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Renda sobre CDI</TableCell>
-                      <TableCell>100%</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableHead>Juros</TableHead>
-                      <TableHead></TableHead>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Ao Ano</TableCell>
-                      <TableCell>{cdbMetrics.annualRate}%</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Ao Mês</TableCell>
-                      <TableCell>{cdbMetrics.monthlyRate}%</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Ao Mês Real</TableCell>
-                      <TableCell>{cdbMetrics.monthlyRealRate}%</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableHead>Dinheiro</TableHead>
-                      <TableHead></TableHead>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Rendimentos Juros</TableCell>
-                      <TableCell>
-                        {formatCurrency(Number(cdbMetrics.grossReturn))}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Imposto Rendimento</TableCell>
-                      <TableCell>
-                        {formatCurrency(Number(cdbMetrics.tax))}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Valor Final</TableCell>
-                      <TableCell>
-                        {formatCurrency(Number(cdbMetrics.finalValue))}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Rendimentos descontado IR</TableCell>
-                      <TableCell>
-                        {formatCurrency(Number(cdbMetrics.discountedIncomeIR))}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Valor descontado IR</TableCell>
-                      <TableCell>
-                        {formatCurrency(Number(cdbMetrics.discountedValue))}
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="selic">
-          <Card>
-            <CardHeader className="flex flex-row">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <CardTitle>SELIC</CardTitle>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p className="max-w-xs">
-                      A Selic (Sistema Especial de Liquidação e Custódia) é a
-                      taxa básica de juros da economia brasileira. Ela é o
-                      principal instrumento do Banco Central do Brasil (BC) para
-                      controlar a inflação.
-                    </p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4">
-                <div className="grid w-full max-w-sm items-center gap-1.5">
-                  <Label htmlFor="selic-initial">Valor inicial</Label>
-                  <Input
-                    type="number"
-                    id="selic-initial"
-                    value={selicInitialValue}
-                    onChange={(e) =>
-                      setSelicInitialValue(Number(e.target.value))
-                    }
-                  />
-                </div>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Métrica</TableHead>
-                      <TableHead>Valor</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell>Taxa SELIC</TableCell>
-                      <TableCell>10.75%</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Ao Ano</TableCell>
-                      <TableCell>{selicMetrics.annualRate}%</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Ao Mês</TableCell>
-                      <TableCell>{selicMetrics.monthlyRate}%</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Ao Mês Real</TableCell>
-                      <TableCell>{selicMetrics.monthlyRealRate}%</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Rendimentos Juros</TableCell>
-                      <TableCell>
-                        {formatCurrency(Number(selicMetrics.grossReturn))}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Imposto Rendimento</TableCell>
-                      <TableCell>
-                        {formatCurrency(Number(selicMetrics.tax))}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Valor Final</TableCell>
-                      <TableCell>
-                        {formatCurrency(Number(selicMetrics.finalValue))}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Valor descontado IR</TableCell>
-                      <TableCell>
-                        {formatCurrency(Number(selicMetrics.discountedValue))}
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="poupanca">
-          <Card>
-            <CardHeader>
-              <CardTitle>POUPANÇA</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4">
-                <div className="grid w-full max-w-sm items-center gap-1.5">
-                  <Label htmlFor="poupanca-initial">Valor inicial</Label>
-                  <Input
-                    type="number"
-                    id="poupanca-initial"
-                    value={poupancaInitialValue}
-                    onChange={(e) =>
-                      setPoupancaInitialValue(Number(e.target.value))
-                    }
-                  />
-                </div>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Métrica</TableHead>
-                      <TableHead>Valor</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell>Taxa Poupança</TableCell>
-                      <TableCell>6.00%</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Ao Ano</TableCell>
-                      <TableCell>{poupancaMetrics.annualRate}%</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Ao Mês</TableCell>
-                      <TableCell>{poupancaMetrics.monthlyRate}%</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Rendimentos Juros</TableCell>
-                      <TableCell>
-                        {formatCurrency(Number(poupancaMetrics.grossReturn))}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Valor Final</TableCell>
-                      <TableCell>
-                        {formatCurrency(Number(poupancaMetrics.finalValue))}
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      </Card>
       <Card>
         <CardHeader>
           <CardTitle>Informações Adicionais</CardTitle>
