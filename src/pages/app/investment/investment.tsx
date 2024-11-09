@@ -37,12 +37,40 @@ type Expenses = {
 
 export default function Component() {
   const [salary, setSalary] = useState(5000)
+  const [toInvest, setToInvest] = useState(5000)
   const [cdbInitialValue, setCdbInitialValue] = useState(5000)
   const [selicInitialValue, setSelicInitialValue] = useState(5000)
   const [poupancaInitialValue, setPoupancaInitialValue] = useState(5000)
   const [monthlyContribution, setMonthlyContribution] = useState(550)
   const [cdiRate, setCdiRate] = useState(10.75)
   const [month, setMonth] = useState(12)
+
+  const invest = [
+    {
+      name: 'Renda Fixa',
+      percentage: 0.5,
+      description:
+        'Investimento em ativos de baixo risco e alta segurança, como CDB e Tesouro Selic, proporcionando retorno previsível e liquidez diária, ideal para proteção do capital.',
+    },
+    {
+      name: 'Fundos de Ações',
+      percentage: 0.3,
+      description:
+        'Investimento em ETFs que replicam índices de ações, como o Ibovespa e o S&P 500, permitindo diversificação no mercado de ações com gestão simplificada e menor risco em comparação com ações individuais.',
+    },
+    {
+      name: 'Criptoativos',
+      percentage: 0.1,
+      description:
+        'Pequena exposição ao mercado de criptoativos, como Bitcoin ou Ethereum, visando potencial de valorização no longo prazo, com risco moderado.',
+    },
+    {
+      name: 'Ações Individuais',
+      percentage: 0.1,
+      description:
+        'Ações de empresas consolidadas no mercado nacional, oferecendo um equilíbrio entre liquidez e potencial de valorização com exposição a empresas de alta solidez.',
+    },
+  ]
 
   const expenses: Expenses[] = [
     {
@@ -198,6 +226,62 @@ export default function Component() {
                       {calculatePorcentage(expenses) * 100}%
                     </TableCell>
                     <TableCell>{formatCurrency(salary)}</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TooltipProvider>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Carteira de investimento</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="grid w-full max-w-sm items-center gap-1.5">
+              <Label htmlFor="salary">Valor a investir</Label>
+              <Input
+                type="number"
+                id="salary"
+                value={toInvest}
+                onChange={(e) => setToInvest(Number(e.target.value))}
+                className="max-w-xs"
+              />
+            </div>
+            <TooltipProvider>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Categoria</TableHead>
+                    <TableHead>Porcentagem</TableHead>
+                    <TableHead>Gastar</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {invest.map((expense: Expenses) => (
+                    <TableRow key={expense.name}>
+                      <TableCell>
+                        <Tooltip>
+                          <TooltipTrigger>{expense.name}</TooltipTrigger>
+                          <TooltipContent>
+                            <p className="max-w-xs">{expense.description}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TableCell>
+                      <TableCell>{expense.percentage * 100}%</TableCell>
+                      <TableCell>
+                        {formatCurrency(toInvest * expense.percentage)}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                  <TableRow>
+                    <TableCell className="font-bold">Total</TableCell>
+                    <TableCell>
+                      {calculatePorcentage(expenses) * 100}%
+                    </TableCell>
+                    <TableCell>{formatCurrency(toInvest)}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
