@@ -42,7 +42,7 @@ export default function Component() {
   const [selicInitialValue, setSelicInitialValue] = useState(5000)
   const [poupancaInitialValue, setPoupancaInitialValue] = useState(5000)
   const [monthlyContribution, setMonthlyContribution] = useState(550)
-  const [cdiRate, setCdiRate] = useState(10.75)
+  const [cdiRate, setCdiRate] = useState(10.97)
   const [month, setMonth] = useState(12)
 
   const invest = [
