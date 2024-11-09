@@ -1,37 +1,69 @@
-# Painel de Gestão Financeira e Investimentos
+# 📊 Painel de Gestão Financeira e Investimentos
 
-Este projeto é um painel interativo para ajudar no gerenciamento de finanças pessoais e simulação de investimentos. Com ele, você pode visualizar a divisão das suas despesas mensais e calcular o retorno esperado em investimentos como CDB, SELIC e Poupança.
+> Um painel interativo para ajudar no gerenciamento de finanças pessoais e simulação de investimentos. Com ele, você pode monitorar suas despesas mensais e estimar o retorno de investimentos como CDB, SELIC e Poupança.
 
-## Funcionalidades
+---
 
-- **Gestão de Despesas**: Com base em um salário especificado, o painel mostra uma divisão recomendada das despesas para categorias essenciais, como:
-  - Necessidades (Essenciais)
-  - Liberdade Financeira (Investimentos)
-  - Educação (Crescimento Pessoal)
-  - Poupança para Grandes Compras
-  - Diversão (Lazer)
-  - Doações (Contribuição)
-- **Simulação de Investimentos**: Calcula o retorno de investimentos com base nos valores iniciais, contribuição mensal e taxas de rendimento esperadas.
-- **Design Responsivo**: O layout é otimizado para diferentes dispositivos e tamanhos de tela.
+## 🌟 Funcionalidades
 
-## Tecnologias Utilizadas
+### 📈 Gestão de Despesas
+Organize suas finanças com recomendações para as categorias essenciais de despesas:
+- **Necessidades** (Essenciais)
+- **Liberdade Financeira** (Investimentos)
+- **Educação** (Crescimento Pessoal)
+- **Poupança para Grandes Compras**
+- **Diversão** (Lazer)
+- **Doações** (Contribuição)
 
-- **React** para criação de interfaces interativas.
-- **useState** para gerenciar estados e configurações dinâmicas do usuário.
-- **Componentes UI** (Card, Table, Tabs, Tooltip) para organizar e exibir informações de forma clara.
-- **Intl.NumberFormat** para formatação de valores monetários no padrão brasileiro (R$).
+### 💰 Simulação de Investimentos
+Simule o retorno de investimentos com base em:
+- **Valor Inicial**, **Aporte Mensal**, e **Taxas de Rendimento**
+- Comparações entre **CDB, SELIC e Poupança** com projeções de rendimentos e impostos.
 
-## Estrutura do Projeto
+### 📱 Design Responsivo
+O layout adapta-se a diferentes dispositivos, oferecendo uma experiência otimizada tanto para desktops quanto para dispositivos móveis.
 
-1. **Defina Seu Salário**: Utilize o campo de entrada para definir o valor do salário. O painel atualizará automaticamente os valores das despesas com base nas proporções predefinidas.
-2. **Configuração de Contribuições e Taxas**: Preencha os campos de valor inicial, aporte mensal e taxa CDI para simulação dos investimentos.
-3. **Simulação de Investimentos**: Navegue pelas abas para visualizar as métricas de rendimento de CDB, SELIC e Poupança, incluindo taxas mensais, anuais, rendimentos, impostos e valor líquido.
+---
 
-## Componentes
+## 🚀 Tecnologias Utilizadas
 
-- **Card**: Exibe as seções de despesas e de configurações de investimento.
-- **Table**: Organiza e apresenta as despesas e métricas de investimento.
-- **Tabs**: Permite alternar entre diferentes opções de investimento.
-- **Tooltip**: Exibe descrições adicionais sobre as categorias e métricas.
+- **React** – Interatividade e componentes.
+- **useState** – Gerenciamento dinâmico dos estados.
+- **Componentes UI** – (Card, Table, Tabs, Tooltip) para organização e exibição intuitiva das informações.
+- **Intl.NumberFormat** – Formatação de valores monetários no padrão brasileiro (R$).
 
+---
 
+## 📌 Estrutura do Projeto
+
+1. **Defina Seu Salário** 💼 – Configure o salário e visualize a divisão das despesas recomendadas.
+2. **Simulação de Investimentos** 💹 – Insira **valor inicial**, **aporte mensal** e **taxa CDI** para calcular os rendimentos de diferentes opções de investimento.
+3. **Visualize o Resultado** 🔍 – Navegue entre as abas de **CDB**, **SELIC** e **Poupança** para comparar as taxas, rendimentos e impostos projetados.
+
+---
+
+## 🧩 Componentes Principais
+
+- **Card** – Organiza as seções de despesas e configurações de investimento.
+- **Table** – Exibe informações de forma estruturada.
+- **Tabs** – Alterna entre diferentes opções de investimento.
+- **Tooltip** – Exibe descrições adicionais sobre categorias e métricas.
+
+---
+
+## 🎨 Layout & Exemplos
+
+<!-- Adicione imagens do projeto aqui -->
+### Visualização de Despesas
+![Exemplo de Despesas](path/to/despesas-image.png)
+
+### Simulação de Investimentos
+![Exemplo de Simulação de Investimentos](path/to/investimentos-image.png)
+
+---
+
+## 📥 Instalação
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/painel-gestao-financeira.git
