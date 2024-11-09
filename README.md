@@ -1,6 +1,6 @@
 # 📊 Painel de Gestão Financeira e Investimentos
 
-> Um painel interativo para ajudar no gerenciamento de finanças pessoais e simulação de investimentos. Com ele, você pode monitorar suas despesas mensais e estimar o retorno de investimentos como CDB, SELIC e Poupança.
+> Um painel interativo para ajudar no gerenciamento de finanças pessoais e simulação de investimentos. Com ele, você pode simular suas despesas mensais e estimar o retorno de investimentos como CDB, SELIC e Poupança.
 
 ---
 
