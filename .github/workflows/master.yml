@@ -11,6 +11,12 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2
 
+      - name: 📄 Create .env.local file
+        run: |
+          echo "VITE_API_URL='/'" >> .env.local
+          echo "VITE_ENABLE_API_DELAY=false" >> .env.local
+          echo "MODE=production" >> .env.local
+
       - name: 📦 Install dependencies
         run: npm install
 
