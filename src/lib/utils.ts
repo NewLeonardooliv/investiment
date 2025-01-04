@@ -1,6 +1,8 @@
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
+import { Expenses } from '@/pages/app/investment/investment'
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
@@ -134,4 +136,21 @@ export function formatDateTime(dateString: string): string {
 
   const date = new Date(dateString)
   return date.toLocaleString('pt-BR', options).replace(',', '')
+}
+
+export const formatCurrency = (value: number) => {
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  }).format(value)
+}
+
+export const calculatePorcentage = (expenses: Expenses[]) => {
+  let porcentage = 0
+
+  expenses.forEach((expense) => {
+    porcentage += expense.percentage
+  })
+
+  return Math.round(porcentage * 100) / 100
 }

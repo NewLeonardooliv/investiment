@@ -21,89 +21,24 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { formatCurrency } from '@/lib/utils'
 
-const formatCurrency = (value: number) => {
-  return new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-  }).format(value)
-}
+import { InvestimentHowToSpendYourMoney } from './investiment-how-to-spend-your-money'
+import { InvestimentPortifolio } from './investment-portfolio'
 
-type Expenses = {
+export type Expenses = {
   name: string
   percentage: number
   description: string
 }
 
 export default function Component() {
-  const [salary, setSalary] = useState(5000)
-  const [toInvest, setToInvest] = useState(5000)
   const [cdbInitialValue, setCdbInitialValue] = useState(5000)
   const [selicInitialValue, setSelicInitialValue] = useState(5000)
   const [poupancaInitialValue, setPoupancaInitialValue] = useState(5000)
   const [monthlyContribution, setMonthlyContribution] = useState(550)
   const [cdiRate, setCdiRate] = useState(10.97)
   const [month, setMonth] = useState(12)
-
-  const invest = [
-    {
-      name: 'Renda Fixa',
-      percentage: 0.5,
-      description:
-        'Investimento em ativos de baixo risco e alta segurança, como CDB e Tesouro Selic, proporcionando retorno previsível e liquidez diária, ideal para proteção do capital.',
-    },
-    {
-      name: 'Fundos de Ações',
-      percentage: 0.3,
-      description:
-        'Investimento em ETFs que replicam índices de ações, como o Ibovespa e o S&P 500, permitindo diversificação no mercado de ações com gestão simplificada e menor risco em comparação com ações individuais.',
-    },
-    {
-      name: 'Criptoativos',
-      percentage: 0.1,
-      description:
-        'Pequena exposição ao mercado de criptoativos, como Bitcoin ou Ethereum, visando potencial de valorização no longo prazo, com risco moderado.',
-    },
-    {
-      name: 'Ações Individuais',
-      percentage: 0.1,
-      description:
-        'Ações de empresas consolidadas no mercado nacional, oferecendo um equilíbrio entre liquidez e potencial de valorização com exposição a empresas de alta solidez.',
-    },
-  ]
-
-  const expenses: Expenses[] = [
-    {
-      name: 'Essenciais (Necessidades)',
-      percentage: 0.6,
-      description:
-        'Inclui despesas básicas, como aluguel, alimentação, contas, transporte, etc.',
-    },
-    {
-      name: 'Liberdade Financeira (Investimentos)',
-      percentage: 0.1,
-      description:
-        'Montante destinado a investimentos para gerar renda passiva, visando independência financeira.',
-    },
-    {
-      name: 'Educação (Crescimento Pessoal)',
-      percentage: 0.1,
-      description:
-        'Para investir em cursos, livros, treinamentos e qualquer coisa que aumente suas habilidades e conhecimentos.',
-    },
-    {
-      name: 'Poupança para Grandes Compras',
-      percentage: 0.1,
-      description:
-        'Reserva para metas específicas, como viagens, compra de um carro, ou um fundo de emergência.',
-    },
-    {
-      name: 'Diversão (Lazer)',
-      percentage: 0.1,
-      description:
-        'Dinheiro para gastar em atividades de lazer e entretenimento, como restaurantes, hobbies, passeios, etc.',
-    },
-  ]
 
   const calculateRate = (): number => {
     const rate = month <= 6 ? 22.5 : month <= 12 ? 20 : month <= 24 ? 17.5 : 15
@@ -166,129 +101,11 @@ export default function Component() {
   const selicMetrics = calculateInvestmentMetrics(selicInitialValue, 10.75)
   const poupancaMetrics = calculateInvestmentMetrics(poupancaInitialValue, 6.0)
 
-  const calculatePorcentage = (expenses: Expenses[]) => {
-    let porcentage = 0
-
-    expenses.forEach((expense) => {
-      porcentage += expense.percentage
-    })
-
-    return Math.round(porcentage * 100) / 100
-  }
-
   return (
     <div className="container mx-auto space-y-6 p-4">
-      <Card>
-        <CardHeader>
-          <CardTitle>Como gastar seu dinheiro</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="grid w-full max-w-sm items-center gap-1.5">
-              <Label htmlFor="salary">Salário</Label>
-              <Input
-                type="number"
-                id="salary"
-                value={salary}
-                onChange={(e) => setSalary(Number(e.target.value))}
-                className="max-w-xs"
-              />
-            </div>
-            <TooltipProvider>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Categoria</TableHead>
-                    <TableHead>Porcentagem</TableHead>
-                    <TableHead>Gastar</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {expenses.map((expense: Expenses) => (
-                    <TableRow key={expense.name}>
-                      <TableCell>
-                        <Tooltip>
-                          <TooltipTrigger>{expense.name}</TooltipTrigger>
-                          <TooltipContent>
-                            <p className="max-w-xs">{expense.description}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TableCell>
-                      <TableCell>{expense.percentage * 100}%</TableCell>
-                      <TableCell>
-                        {formatCurrency(salary * expense.percentage)}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                  <TableRow>
-                    <TableCell className="font-bold">Total</TableCell>
-                    <TableCell>
-                      {calculatePorcentage(expenses) * 100}%
-                    </TableCell>
-                    <TableCell>{formatCurrency(salary)}</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TooltipProvider>
-          </div>
-        </CardContent>
-      </Card>
+      <InvestimentHowToSpendYourMoney />
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Carteira de investimento</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="grid w-full max-w-sm items-center gap-1.5">
-              <Label htmlFor="salary">Valor a investir</Label>
-              <Input
-                type="number"
-                id="salary"
-                value={toInvest}
-                onChange={(e) => setToInvest(Number(e.target.value))}
-                className="max-w-xs"
-              />
-            </div>
-            <TooltipProvider>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Categoria</TableHead>
-                    <TableHead>Porcentagem</TableHead>
-                    <TableHead>Gastar</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {invest.map((expense: Expenses) => (
-                    <TableRow key={expense.name}>
-                      <TableCell>
-                        <Tooltip>
-                          <TooltipTrigger>{expense.name}</TooltipTrigger>
-                          <TooltipContent>
-                            <p className="max-w-xs">{expense.description}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TableCell>
-                      <TableCell>{expense.percentage * 100}%</TableCell>
-                      <TableCell>
-                        {formatCurrency(toInvest * expense.percentage)}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                  <TableRow>
-                    <TableCell className="font-bold">Total</TableCell>
-                    <TableCell>
-                      {calculatePorcentage(expenses) * 100}%
-                    </TableCell>
-                    <TableCell>{formatCurrency(toInvest)}</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TooltipProvider>
-          </div>
-        </CardContent>
-      </Card>
+      <InvestimentPortifolio />
 
       <Card>
         <CardHeader>
