@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {
   Tooltip,
   TooltipContent,
@@ -48,6 +49,45 @@ const invest = [
   },
 ]
 
+const investFiis = [
+  {
+    name: 'Fundos de CRI (Papel)',
+    percentage: 0.27,
+    description:
+      'FIIs que investem em Certificados de Recebíveis Imobiliários (CRIs). Costumam ter rendimentos atrelados a índices de inflação ou CDI, e podem oferecer maior previsibilidade de receitas.',
+  },
+  {
+    name: 'Fundos de Shopping',
+    percentage: 0.17,
+    description:
+      'FIIs focados em shoppings centers. O retorno vem principalmente dos aluguéis das lojas e da participação no faturamento dos estabelecimentos.',
+  },
+  {
+    name: 'Fundos de Logística',
+    percentage: 0.17,
+    description:
+      'FIIs que investem em galpões, centros de distribuição e infraestrutura de logística, geralmente locados para empresas de varejo, e-commerce e transporte.',
+  },
+  {
+    name: 'Fundos de Escritório',
+    percentage: 0.16,
+    description:
+      'FIIs voltados a prédios comerciais e lajes corporativas. As receitas vêm dos aluguéis pagos por empresas que ocupam esses escritórios.',
+  },
+  {
+    name: 'Renda Urbana',
+    percentage: 0.09,
+    description:
+      'FIIs que investem em imóveis urbanos como lojas de varejo, agências bancárias ou supermercados, focando em aluguéis de contratos de longo prazo.',
+  },
+  {
+    name: 'FoF (Fundo de Fundos)',
+    percentage: 0.14,
+    description:
+      'FIIs que investem em outros fundos imobiliários, oferecendo diversificação e gestão profissional ao alocar recursos em múltiplos setores e estratégias.',
+  },
+]
+
 export function InvestimentPortifolio() {
   const [toInvest, setToInvest] = React.useState(5000)
 
@@ -56,54 +96,134 @@ export function InvestimentPortifolio() {
       <CardHeader>
         <CardTitle>Carteira de investimento</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="salary">Valor a investir</Label>
-            <Input
-              type="number"
-              id="salary"
-              value={toInvest}
-              onChange={(e) => setToInvest(Number(e.target.value))}
-              className="max-w-xs"
-            />
-          </div>
-          <TooltipProvider>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Categoria</TableHead>
-                  <TableHead>Porcentagem</TableHead>
-                  <TableHead>Gastar</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {invest.map((expense: Expenses) => (
-                  <TableRow key={expense.name}>
-                    <TableCell>
-                      <Tooltip>
-                        <TooltipTrigger>{expense.name}</TooltipTrigger>
-                        <TooltipContent>
-                          <p className="max-w-xs">{expense.description}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TableCell>
-                    <TableCell>{expense.percentage * 100}%</TableCell>
-                    <TableCell>
-                      {formatCurrency(toInvest * expense.percentage)}
-                    </TableCell>
-                  </TableRow>
-                ))}
-                <TableRow>
-                  <TableCell className="font-bold">Total</TableCell>
-                  <TableCell>{calculatePorcentage(invest) * 100}%</TableCell>
-                  <TableCell>{formatCurrency(toInvest)}</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TooltipProvider>
-        </div>
-      </CardContent>
+      <Tabs defaultValue="generic" className="w-full p-5">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="generic">Geral</TabsTrigger>
+          <TabsTrigger value="fiis">
+            Fundos de Investimentos Imobiliários
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="generic">
+          <Card>
+            <CardHeader>
+              <CardTitle>Geral</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="grid w-full max-w-sm items-center gap-1.5">
+                  <Label htmlFor="salary">Valor a investir</Label>
+                  <Input
+                    type="number"
+                    id="salary"
+                    value={toInvest}
+                    onChange={(e) => setToInvest(Number(e.target.value))}
+                    className="max-w-xs"
+                  />
+                </div>
+                <TooltipProvider>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Categoria</TableHead>
+                        <TableHead>Porcentagem</TableHead>
+                        <TableHead>Gastar</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {invest.map((expense: Expenses) => (
+                        <TableRow key={expense.name}>
+                          <TableCell>
+                            <Tooltip>
+                              <TooltipTrigger>{expense.name}</TooltipTrigger>
+                              <TooltipContent>
+                                <p className="max-w-xs">
+                                  {expense.description}
+                                </p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TableCell>
+                          <TableCell>{expense.percentage * 100}%</TableCell>
+                          <TableCell>
+                            {formatCurrency(toInvest * expense.percentage)}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                      <TableRow>
+                        <TableCell className="font-bold">Total</TableCell>
+                        <TableCell>
+                          {calculatePorcentage(invest) * 100}%
+                        </TableCell>
+                        <TableCell>{formatCurrency(toInvest)}</TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </TooltipProvider>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="fiis">
+          <Card>
+            <CardHeader>
+              <CardTitle>Fundos de Investimentos Imobiliários</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="grid w-full max-w-sm items-center gap-1.5">
+                  <Label htmlFor="salary">Valor a investir</Label>
+                  <Input
+                    type="number"
+                    id="salary"
+                    value={toInvest}
+                    onChange={(e) => setToInvest(Number(e.target.value))}
+                    className="max-w-xs"
+                  />
+                </div>
+                <TooltipProvider>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Categoria</TableHead>
+                        <TableHead>Porcentagem</TableHead>
+                        <TableHead>Gastar</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {investFiis.map((expense: Expenses) => (
+                        <TableRow key={expense.name}>
+                          <TableCell>
+                            <Tooltip>
+                              <TooltipTrigger>{expense.name}</TooltipTrigger>
+                              <TooltipContent>
+                                <p className="max-w-xs">
+                                  {expense.description}
+                                </p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TableCell>
+                          <TableCell>
+                            {(expense.percentage * 100).toFixed(0)}%
+                          </TableCell>
+                          <TableCell>
+                            {formatCurrency(toInvest * expense.percentage)}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                      <TableRow>
+                        <TableCell className="font-bold">Total</TableCell>
+                        <TableCell>
+                          {calculatePorcentage(invest) * 100}%
+                        </TableCell>
+                        <TableCell>{formatCurrency(toInvest)}</TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </TooltipProvider>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </Card>
   )
 }
